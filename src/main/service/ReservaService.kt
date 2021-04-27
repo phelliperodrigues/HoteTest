@@ -6,37 +6,27 @@ import main.entity.Reserva
 class ReservaService {
 
     fun findBestHotel(reserva: Reserva): Hotel {
-        val hotel3 = Hotel(
-            name = "3",
-            classificacao = 3,
-            valorDiariaFiliado = 150.0,
-            valorDiariaRegular = 160.0,
-            valorFDSFilido = 20.0,
-            valorFDSRegular = 80.0
-        )
-
-        val hotel1 = Hotel(
-            name = "1",
-            classificacao = 10,
-            valorDiariaFiliado = 110.0,
-            valorDiariaRegular = 110.0,
-            valorFDSFilido = 40.0,
-            valorFDSRegular = 60.0
-        )
-
-        val hotel2 = Hotel(
-            name = "2",
-            classificacao = 4,
-            valorDiariaFiliado = 110.0,
-            valorDiariaRegular = 120.0,
-            valorFDSFilido = 40.0,
-            valorFDSRegular = 50.0
-        )
+        val hotels = Hotel.buildHotels()
+        var bestValue: Double? = null
+        var bestHotel: Hotel? = null
+        hotels.forEach {
+                hotel ->
+            val total = hotel.calcule(reserva)
+            if (bestValue != null) {
+                if (bestValue!! > total){
+                    bestValue = total
+                    bestHotel = hotel
+                } else if (bestValue == total){
+                    bestHotel = if (bestHotel!!.classificacao > hotel.classificacao) bestHotel else hotel
+                }
+            } else {
+                bestValue = total
+                bestHotel = hotel
+            }
 
 
-        val listHotels = listOf(hotel1, hotel2,hotel3)
-
-        return reserva.getBestHotle(listHotels)
+        }
+        return bestHotel!!
 
     }
 }
