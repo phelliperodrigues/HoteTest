@@ -1,8 +1,8 @@
-package main
+package main.entity
 
 import java.time.LocalDate
 
-class Hotel(
+open class Hotel(
     var name: String,
     var classificacao: Int,
     var valorDiariaRegular: Double,
@@ -22,7 +22,7 @@ class Hotel(
         return total
     }
 
-    private fun calculeDiadeSemana(valor: Double, dates: List<LocalDate>): Double{
+    open fun calculeDiadeSemana(valor: Double, dates: List<LocalDate>): Double{
         var total = 0.0
         dates.stream().filter {
             data ->
@@ -34,7 +34,7 @@ class Hotel(
         return total
     }
 
-    private fun calculeFDS(valor: Double, dates: List<LocalDate>): Double {
+    open fun calculeFDS(valor: Double, dates: List<LocalDate>): Double {
         var total = 0.0
         dates.stream().filter {
                 data ->
